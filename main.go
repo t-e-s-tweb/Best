@@ -1491,4 +1491,3 @@ case countQualified > 0:
 default:
     os.Exit(0)
  }
-}
