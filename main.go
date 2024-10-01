@@ -1490,4 +1490,4 @@ case countQualified > 0:
     fmt.Printf("\n> 优质ip数量：\033[32m%d\033[0m\n", countQualified)
 default:
     os.Exit(0)
- }
+}			
