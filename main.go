@@ -239,27 +239,6 @@ func locationsJsonDownload() {
 	}
 }
 
-// downloadWithIEProxy 尝试使用IE代理设置下载文件
-func downloadWithIEProxy(downloadURL string) ([]byte, error) {
-	proxyFunc := ieproxy.GetProxyFunc()
-	client := &http.Client{
-		Timeout:   15 * time.Second,
-		Transport: &http.Transport{Proxy: proxyFunc},
-	}
-
-	resp, err := client.Get(downloadURL)
-	if err != nil {
-		return nil, fmt.Errorf("下载时出错: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body) // 尝试读取响应体以获取更多错误信息
-		return nil, fmt.Errorf("非预期的HTTP状态码: %v, 响应体: %s", resp.Status, string(body))
-	}
-
-	return io.ReadAll(resp.Body)
-}
 
 // autoNetworkDetection 自动检测网络环境，返回一个bool值
 func autoNetworkDetection() bool {
