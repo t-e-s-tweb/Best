@@ -22,8 +22,8 @@ import (
 	"time"
 
 	"github.com/VividCortex/ewma"
-	"github.com/mattn/go-ieproxy"
-	"golang.org/x/sys/windows/registry"
+//	"github.com/mattn/go-ieproxy"
+//	"golang.org/x/sys/windows/registry"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
