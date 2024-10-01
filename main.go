@@ -168,11 +168,6 @@ func locationsJsonDownload() {
 	if _, err := os.Stat("locations.json"); os.IsNotExist(err) {
 		fmt.Println("正在从 " + locationsJsonUrl + " 下载 locations.json")
 
-		body, err := downloadWithIEProxy(locationsJsonUrl)
-		if err != nil {
-			fmt.Printf("下载失败: %v\n", err)
-			return
-		}
 
 		err = json.Unmarshal(body, &locations)
 		if err != nil {
@@ -240,52 +235,6 @@ func locationsJsonDownload() {
 }
 
 
-// autoNetworkDetection 自动检测网络环境，返回一个bool值
-func autoNetworkDetection() bool {
-	// 检查系统代理是否启用
-	if checkProxyEnabled() {
-		fmt.Println("\033[2J\033[0;0H\033[31m检测到系统代理已启用，请关闭VPN后重试。\033[0m")
-		return false
-	} else {
-		fmt.Println("\033[90m系统代理未启用，检测tun模式代理……\033[0m")
-
-		// 检查Google.com是否可访问
-		if checkProxyUrl("https://www.google.com") {
-			fmt.Println("\033[31m已开启tun模式代理，可以访问外网，请关闭VPN后重试。\033[0m")
-			return false
-		} else {
-			fmt.Println("\033[90m未开启vpn，检测墙内网络是否正常……\033[0m")
-		}
-	}
-
-	// 检测Baidu是否可访问
-	if !checkNormalUrl("https://www.baidu.com") {
-		fmt.Println("\033[2J\033[0;0H\033[31m无互联网访问，请检查网络连接。\033[0m")
-		return false
-	} else {
-		// 清除输出内容
-		fmt.Print("\033[2J\033[0;0H")
-		fmt.Printf("\033[32m网络环境检测正常 \033[0m\n")
-	}
-	return true
-}
-
-// checkProxyEnabled 检测是否开启系统代理服务器
-func checkProxyEnabled() bool {
-	k, err := registry.OpenKey(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Internet Settings`, registry.QUERY_VALUE)
-	if err != nil {
-		fmt.Println("无法打开注册表键:", err)
-	}
-	defer k.Close()
-
-	proxyEnable, _, err := k.GetIntegerValue("ProxyEnable")
-	if err != nil {
-		fmt.Println("无法读取ProxyEnable值:", err)
-		return false
-	}
-
-	return proxyEnable == 1 // proxyEnable键值若为1，说明开启了代理服务器，返回true
-}
 
 // checkNormalUrl 尝试连接指定的URL，检查网络是否可访问
 func checkNormalUrl(url string) bool {
@@ -299,24 +248,7 @@ func checkNormalUrl(url string) bool {
 	return true
 }
 
-// checkProxyUrl 根据域名检测连通性，自动检测代理服务器.
-func checkProxyUrl(urlStr string) bool {
-	proxyFunc := ieproxy.GetProxyFunc()
-	client := &http.Client{
-		Timeout:   2 * time.Second,
-		Transport: &http.Transport{Proxy: proxyFunc},
-	}
 
-	resp, err := client.Get(urlStr)
-	if err != nil {
-		// fmt.Printf("连通性错误 %s: %v\n", urlStr, err)
-		return false
-	}
-	defer resp.Body.Close()
-
-	// fmt.Println("成功连接: " + urlStr)
-	return true
-}
 
 // 检查IP库是否存在并执行下载
 func checkIPLib(url string, fileName string) {
