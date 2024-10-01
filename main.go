@@ -1305,14 +1305,7 @@ func main() {
 	// 下载locations.json
 	locationsJsonDownload()
 
-	// 如果不检测能访问chatgpt的proxyip，则执行网络检查
-	// 检测proxyip必须可以访问外网
-	if !*CheckGPT {
-		// 网络环境检测，如网络不正常自动退出
-		if !autoNetworkDetection() {
-			return
-		}
-	}
+	
 
 	// 存储国家代码到数组中
 	if *countryCodes != "" {
@@ -1390,10 +1383,7 @@ func main() {
 		}
 
 		pause()
-		if *CheckGPT {
-			checkGptProxy()
-		}
-		downloadSpeedTest()
+			downloadSpeedTest()
 		os.Exit(0)
 	} else {
 		// 设置测速结果文件名
@@ -1495,41 +1485,9 @@ func main() {
 			}
 
 		default:
-			fmt.Printf("\n> 优质ip数量：\033[32m%d\033[0m ,是否要上传数据？(y/n):", countQualified)
-			input, _ := reader.ReadString('\n')
-			input = strings.TrimSpace(input)
-			if input == "y" {
-				task.DataUpdate(*outFile, *Domain, *Token, baseLens, countQualified)
-			} else {
-				fmt.Println("退出程序")
-			}
-		}
-	case (*Domain == "" || *Token == "") && countQualified > 0:
-		fmt.Printf("\n> 优质ip数量：\033[32m%d\033[0m ,是否要上传数据？(y/n):", countQualified)
-		input, _ := reader.ReadString('\n')
-		input = strings.TrimSpace(input)
-		if input == "y" {
-			if *Domain == "" {
-				fmt.Println("\033[90m请输入Domain（网址）:\033[0m")
-				domain, _ := reader.ReadString('\n')
-				*Domain = strings.TrimSpace(domain)
-			}
-			if *Token == "" {
-				fmt.Println("\033[90m请输入Token:\033[0m")
-				token, _ := reader.ReadString('\n')
-				*Token = strings.TrimSpace(token)
-			}
-			if *Domain != "" && *Token != "" {
-				task.DataUpdate(*outFile, *Domain, *Token, baseLens, countQualified)
-			} else {
-				fmt.Println("\033[31m主机名或token缺失，本次更新取消!\033[0m")
-				os.Exit(0)
-			}
-
-		} else {
-			fmt.Println("退出程序")
-		}
-	default:
-		os.Exit(0)
-	}
+    fmt.Printf("\n> 优质ip数量：\033[32m%d\033[0m\n", countQualified)
+case countQualified > 0:
+    fmt.Printf("\n> 优质ip数量：\033[32m%d\033[0m\n", countQualified)
+default:
+    os.Exit(0)
 }
