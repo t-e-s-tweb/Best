@@ -1,4 +1,4 @@
-name: cfbestiptest
+name: cfbestip
 
 on:
   workflow_dispatch:
