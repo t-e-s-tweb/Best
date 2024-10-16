@@ -267,7 +267,7 @@ func downloadWithIEProxy(downloadURL string) ([]byte, error) {
 	return io.ReadAll(resp.Body)
 }
 
-// autoNetworkDetection 自动检测网络环境，返回一个bool值
+/*autoNetworkDetection 自动检测网络环境，返回一个bool值
 func autoNetworkDetection() bool {
 	// 检查系统代理是否启用
 	if task.CheckProxyEnabled() {
@@ -296,7 +296,7 @@ func autoNetworkDetection() bool {
 	}
 	return true
 }
-
+*//
 // 代码转移到 task/windows.go task/linux.go 以支持跨系统编译
 // // checkProxyEnabled 检测是否开启系统代理服务器
 // func checkProxyEnabled() bool {
@@ -322,7 +322,7 @@ func autoNetworkDetection() bool {
 // }
 
 // checkNormalUrl 尝试连接指定的URL，检查网络是否可访问
-func checkNormalUrl(url string) bool {
+/*func checkNormalUrl(url string) bool {
 	resp, err := http.Get(url)
 	if err != nil {
 		// fmt.Printf("访问 %s 时未知错误:[ %v ]\n", url, err)
@@ -351,7 +351,7 @@ func checkProxyUrl(urlStr string) bool {
 	// fmt.Println("成功连接: " + urlStr)
 	return true
 }
-
+*/
 // 检查IP库是否存在并执行下载
 func checkIPLib(url string, fileName string) {
 	fileInfo, err := os.Stat(fileName)
