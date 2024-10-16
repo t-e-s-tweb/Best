@@ -68,7 +68,7 @@ const (
 	tcpTimeout  = 2 * time.Second  // 超时时间
 	httpTimeout = 4 * time.Second  // 超时时间
 	maxDuration = 6 * time.Second  // 最大延迟
-	dlTimeout   = 10 * time.Second // 下载超时
+	dlTimeout   = 3 * time.Second // 下载超时
 )
 
 var (
