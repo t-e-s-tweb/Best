@@ -1417,12 +1417,12 @@ func main() {
 
 	// 如果不检测能访问chatgpt的proxyip，则执行网络检查
 	// 检测proxyip必须可以访问外网
-	if !*CheckGPT {
+	/*if !*CheckGPT {
 		// 网络环境检测，如网络不正常自动退出
 		if !autoNetworkDetection() {
 			return
 		}
-	}
+	}*/
 
 	// 存储国家代码到数组中
 	if *countryCodes != "" {
