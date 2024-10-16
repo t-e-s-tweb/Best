@@ -1,9 +1,7 @@
 name: Build and Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-release:
@@ -15,15 +13,10 @@ jobs:
           - GOOS: linux
             GOARCH: amd64
             output_name: bestipTest_linux_amd64
-          - GOOS: windows
-            GOARCH: amd64
-            output_name: bestipTest.exe
-          - GOOS: darwin
-            GOARCH: amd64
-            output_name: bestipTest_darwin_amd64
-          - GOOS: darwin
+          - GOOS: android
             GOARCH: arm64
-            output_name: bestipTest_darwin_arm64
+            output_name: bestiptest
+          
 
     steps:
     - name: Checkout code
@@ -99,7 +92,5 @@ jobs:
         ${{ steps.commit_message.outputs.commit_message }}" \
           --draft=false \
           ./artifacts/bestipTest_linux_amd64/bestipTest_linux_amd64 \
-          ./artifacts/bestipTest.exe/bestipTest.exe \
-          ./artifacts/bestipTest_darwin_amd64/bestipTest_darwin_amd64 \
-          ./artifacts/bestipTest_darwin_arm64/bestipTest_darwin_arm64
+          ./artifacts/bestiptest/bestiptest
       shell: bash
