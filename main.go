@@ -296,7 +296,7 @@ func autoNetworkDetection() bool {
 	}
 	return true
 }
-*//
+*/
 // 代码转移到 task/windows.go task/linux.go 以支持跨系统编译
 // // checkProxyEnabled 检测是否开启系统代理服务器
 // func checkProxyEnabled() bool {
